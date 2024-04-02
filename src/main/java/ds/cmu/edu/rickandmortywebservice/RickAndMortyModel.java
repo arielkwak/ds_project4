@@ -19,6 +19,7 @@ public class RickAndMortyModel {
 
     public void fetchData() throws IOException{
         try{
+            System.out.println(apiURL);
             // connect url
             URL url = new URL(apiURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -39,9 +40,10 @@ public class RickAndMortyModel {
 
             // Parse the response as a map
             Map<String, Object> data = gson.fromJson(content.toString(), new TypeToken<Map<String, Object>>() {}.getType());
-
+            System.out.println(data);
             // Get the results field, which is a list of maps
             results = (List<Map<String, Object>>) data.get("results");
+            System.out.println(results);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,7 +51,7 @@ public class RickAndMortyModel {
 
     public List<String> getPlanetInfo(){
         List<String> planets = new ArrayList<>();
-        apiURL = "https://rickandmortyapi.com/api/character";
+        apiURL = "https://rickandmortyapi.com/api/location";
         try{
             fetchData();
         } catch (IOException e) {
@@ -64,7 +66,7 @@ public class RickAndMortyModel {
 
     public Map<String, Object> getCharacterInfo(String searchTerm){
         Map<String, Object> characters = new HashMap<>();
-        apiURL = "https://rickandmortyapi.com/api/location";
+        apiURL = "https://rickandmortyapi.com/api/character";
         try{
             fetchData();
         } catch (IOException e) {
@@ -85,6 +87,8 @@ public class RickAndMortyModel {
                 // Print the location information
                 Map<String, Object> location = (Map<String, Object>) d.get("location");
                 characters.put("Location", location.get("name"));
+
+                characters.put("Image", d.get("image"));
             }
         }
         return characters;
