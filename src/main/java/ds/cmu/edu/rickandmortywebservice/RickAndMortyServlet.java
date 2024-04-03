@@ -1,6 +1,7 @@
 package ds.cmu.edu.rickandmortywebservice;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -39,9 +40,13 @@ public class RickAndMortyServlet extends HttpServlet {
                 String json = gson.toJson(planetResults);
 
                 // Write the JSON response
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);
+//                response.setContentType("application/json");
+//                response.setCharacterEncoding("UTF-8");
+//                response.getWriter().write(json);
+                PrintWriter pw = response.getWriter();
+                pw.print("application/json");
+                pw.print("UTF-8");
+                pw.print(json);
 
             } else if (option.equals("character")){
                 searchTerm = request.getParameter("searchTerm");
@@ -53,9 +58,10 @@ public class RickAndMortyServlet extends HttpServlet {
                 String json = gson.toJson(characterResults);
 
                 // Write the JSON response
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);
+                PrintWriter pw = response.getWriter();
+                pw.print("application/json");
+                pw.print("UTF-8");
+                pw.print(json);
             }
         }
 
